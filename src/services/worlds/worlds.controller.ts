@@ -17,9 +17,9 @@ export class WorldsController {
     return this.worldsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.worldsService.findOne(+id);
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    return this.worldsService.findOne(name);
   }
 
   @Patch(':id')
