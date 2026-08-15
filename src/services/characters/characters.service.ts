@@ -15,8 +15,8 @@ export class CharactersService {
     return `This action returns all characters`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} character`;
+  findOne(name: string) {
+    return this.tibiaDataApiAdapter.getCharacter(name);
   }
 
   update(id: number, updateCharacterDto: UpdateCharacterDto) {

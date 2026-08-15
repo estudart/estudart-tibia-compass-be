@@ -17,9 +17,9 @@ export class CharactersController {
     return this.charactersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.charactersService.findOne(+id);
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    return this.charactersService.findOne(name);
   }
 
   @Patch(':id')

@@ -6,7 +6,11 @@ import { WorldsModule } from './services/worlds/worlds.module';
 import { TibiaDataApiModule } from './infrastructure/tibia-data-api/tibiaDataApi.module';
 
 @Module({
-  imports: [CharactersModule, WorldsModule, TibiaDataApiModule],
+  imports: [
+    CharactersModule, 
+    WorldsModule, 
+    TibiaDataApiModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
