@@ -27,12 +27,19 @@ export class CharactersService {
         const killerNames = death.killers.map((killer) => killer.name);
         return {
           time: death.time,
+          level: death.level,
           killers: killerNames.length > 0 ? killerNames : ['Unknown'],
         };
       })
     );
 
-    return parsedDeaths;
+    const deathStreakInMs = Number(new Date()) - Number(new Date(deaths[0].time));;
+    const deathStreakDays = Math.floor(deathStreakInMs / (1000 * 60 * 60 * 24));
+    return {
+      message: `O ${name} é muito ruim, morre toda hora! xD`,
+      deathStreak: `${name} está a ${deathStreakDays} sem morrer`,
+      details: parsedDeaths
+    };
   }
 
   update(id: number, updateCharacterDto: UpdateCharacterDto) {
