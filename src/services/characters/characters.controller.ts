@@ -22,6 +22,11 @@ export class CharactersController {
     return this.charactersService.findOne(name);
   }
 
+  @Get('/deaths/:name')
+  getCharacterDeaths(@Param('name') name: string) {
+    return this.charactersService.getCharacterDeaths(name);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
     return this.charactersService.update(+id, updateCharacterDto);

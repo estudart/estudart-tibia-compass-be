@@ -48,4 +48,10 @@ export class TibiaDataApiAdapter {
             );
         }
     }
+
+    async getCharacterDeaths(name: string) {
+        const characterData = await this.getCharacter(name);
+        const deaths = characterData.character.deaths;
+        return deaths;
+    }
 }
