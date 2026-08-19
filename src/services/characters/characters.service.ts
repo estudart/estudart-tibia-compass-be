@@ -15,7 +15,7 @@ export class CharactersService {
     return `This action returns all characters`;
   }
 
-  findOne(name: string) {
+  findOne(name: string): Promise<any> {
     return this.tibiaDataApiAdapter.getCharacter(name);
   }
 
