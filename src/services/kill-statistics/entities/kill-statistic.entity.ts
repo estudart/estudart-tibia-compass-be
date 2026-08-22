@@ -24,5 +24,5 @@ export class KillStatistic {
     lastWeekKilled: number;
 
     @Column()
-    date: number;
+    date: Date;
 }
