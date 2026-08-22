@@ -13,9 +13,6 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 TAG="$(git rev-parse --short HEAD)${DIRTY_SUFFIX}"
 
-echo "==> Compiling (nest build)"
-npm run build
-
 echo "==> Building ${IMAGE}:${TAG}"
 docker build --platform linux/amd64 -t "${SERVICE}" .
 
