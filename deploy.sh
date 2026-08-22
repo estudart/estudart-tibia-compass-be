@@ -7,7 +7,11 @@ REPO="tibia-compass"
 SERVICE="estudart-tibia-compass-be"
 IMAGE="${REGION}-docker.pkg.dev/${PROJECT}/${REPO}/${SERVICE}"
 
-TAG="$(git rev-parse --short HEAD)$([ -n "$(git status --porcelain)" ] && echo "-dirty")"
+DIRTY_SUFFIX=""
+if [ -n "$(git status --porcelain)" ]; then
+  DIRTY_SUFFIX="-dirty"
+fi
+TAG="$(git rev-parse --short HEAD)${DIRTY_SUFFIX}"
 
 echo "==> Building ${IMAGE}:${TAG}"
 docker build --platform linux/amd64 -t "${SERVICE}" .
