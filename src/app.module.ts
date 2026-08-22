@@ -20,6 +20,7 @@ import { KillStatisticsModule } from './services/kill-statistics/kill-statistics
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: false,
+      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
     }),
     CharactersModule, 
     WorldsModule, 
