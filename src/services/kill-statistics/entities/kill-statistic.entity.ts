@@ -17,7 +17,7 @@ export class KillStatistic {
     @Column({ name: 'last_day_killed' })
     lastDayKilled: number;
 
-    @Column('last_week_players_killed')
+    @Column({ name: 'last_week_players_killed' })
     lastWeekPlayersKilled: number;
 
     @Column({ name: 'last_week_killed'})

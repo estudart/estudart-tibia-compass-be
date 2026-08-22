@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { KillStatistic } from './entities/kill-statistic.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class KillStatisticsService {
+  constructor(
+    @InjectRepository(KillStatistic)
+    private readonly killStatisticRepository: Repository<KillStatistic>
+  ) {}
   findAll() {
-    return `This action returns all killStatistics`;
+    return this.killStatisticRepository.find();
   }
 
   findOne(id: number) {
