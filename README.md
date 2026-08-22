@@ -57,18 +57,39 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Deployment
+## Environment variables
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Loaded via `@nestjs/config` (`ConfigModule.forRoot({ isGlobal: true })` in `app.module.ts`). Create a `.env` for local dev:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+| Var | Local (dev) | Cloud Run (prod) |
+|---|---|---|
+| `DB_HOST` | `localhost` | Cloud SQL private IP (`10.128.x.x`) |
+| `DB_USERNAME` | `postgres` (or your local role) | Cloud SQL user, e.g. `tibia` |
+| `DB_PASSWORD` | your local password | Cloud SQL user password |
+| `DB_DATABASE` | e.g. `test_db` | `tibia-compass` |
+| `DB_SSL` | unset / `false` | `true` |
+
+`DB_SSL` matters: Cloud SQL enforces TLS on the connection, but a bare local Postgres install usually doesn't support it at all. Set it per-environment — never hardcode `ssl: true` in the TypeORM config, or one of the two environments will fail to connect.
+
+## Deployment (Google Cloud Run)
+
+This project ships to Cloud Run via Artifact Registry. Everything is wrapped in one command:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+make deploy
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Under the hood (`deploy.sh`) this:
+
+1. Builds the image for `linux/amd64` (needed if you're building on Apple Silicon — Cloud Run doesn't run `arm64`).
+2. Tags it with the current git short-SHA (plus `-dirty` if you have uncommitted changes).
+3. Authenticates Docker against Artifact Registry (`gcloud auth configure-docker`).
+4. Pushes the image to `us-central1-docker.pkg.dev/estudart-tibia-compass/tibia-compass/estudart-tibia-compass-be`.
+5. Runs `gcloud run deploy` against the `estudart-tibia-compass` project in `us-central1`.
+
+Prerequisites: Docker running locally, `gcloud` authenticated (`gcloud auth login`) with access to the `estudart-tibia-compass` project, and the Cloud Run service's env vars already set (`gcloud run services update estudart-tibia-compass-be --update-env-vars DB_HOST=...,DB_SSL=true,...`) — `deploy.sh` only rebuilds and redeploys the image, it doesn't touch env config.
+
+For generic NestJS deployment options (Mau/AWS, etc.), see the [deployment documentation](https://docs.nestjs.com/deployment).
 
 ## Resources
 
