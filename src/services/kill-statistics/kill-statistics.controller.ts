@@ -4,7 +4,9 @@ import { KillStatisticsService } from './kill-statistics.service';
 
 @Controller('kill-statistics')
 export class KillStatisticsController {
-  constructor(private readonly killStatisticsService: KillStatisticsService) {}
+  constructor(
+    private readonly killStatisticsService: KillStatisticsService
+  ) {}
 
   @Get()
   findAll(@Query('world') world?: string): Promise<KillStatistic[]> {
