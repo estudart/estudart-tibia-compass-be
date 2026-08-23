@@ -7,19 +7,14 @@ export class KillStatisticsController {
   constructor(private readonly killStatisticsService: KillStatisticsService) {}
 
   @Get()
-  findAll() {
-    return this.killStatisticsService.findAll();
+  findAll(@Query('world') world?: string): Promise<KillStatistic[]> {
+    return world
+      ? this.killStatisticsService.findByWorld(world)
+      : this.killStatisticsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.killStatisticsService.findOne(+id);
-  }
-
-  @Get()
-  findByWorld(
-    @Query('world') world: string
-  ): Promise<KillStatistic[]> {
-    return this.killStatisticsService.getByWorld(world);
   }
 }
