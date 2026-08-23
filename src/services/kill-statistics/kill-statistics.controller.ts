@@ -1,4 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { KillStatistic } from './entities/kill-statistic.entity';
 import { KillStatisticsService } from './kill-statistics.service';
 
 @Controller('kill-statistics')
@@ -6,8 +7,10 @@ export class KillStatisticsController {
   constructor(private readonly killStatisticsService: KillStatisticsService) {}
 
   @Get()
-  findAll() {
-    return this.killStatisticsService.findAll();
+  findAll(@Query('world') world?: string): Promise<KillStatistic[]> {
+    return world
+      ? this.killStatisticsService.findByWorld(world)
+      : this.killStatisticsService.findAll();
   }
 
   @Get(':id')

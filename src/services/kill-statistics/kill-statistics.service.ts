@@ -9,12 +9,17 @@ export class KillStatisticsService {
     @InjectRepository(KillStatistic)
     private readonly killStatisticRepository: Repository<KillStatistic>
   ) {}
-  findAll() {
+
+  findAll(): Promise<KillStatistic[]> {
     return this.killStatisticRepository.find();
   }
 
   findOne(id: number) {
     return `This action returns a #${id} killStatistic`;
+  }
+
+  findByWorld(name: string): Promise<KillStatistic[]> {
+    return this.killStatisticRepository.findBy({ world: name });
   }
 
   remove(id: number) {
