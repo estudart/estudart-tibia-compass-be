@@ -7,6 +7,7 @@ import { CharactersModule } from './services/characters/characters.module';
 import { WorldsModule } from './services/worlds/worlds.module';
 import { TibiaDataApiModule } from './infrastructure/tibia-data-api/tibiaDataApi.module';
 import { KillStatisticsModule } from './services/kill-statistics/kill-statistics.module';
+import { CreaturesModule } from './services/creatures/creatures.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { KillStatisticsModule } from './services/kill-statistics/kill-statistics
     }),
     CharactersModule, 
     WorldsModule, 
-    TibiaDataApiModule, KillStatisticsModule
+    TibiaDataApiModule, KillStatisticsModule, CreaturesModule
   ],
   controllers: [AppController],
   providers: [AppService],
